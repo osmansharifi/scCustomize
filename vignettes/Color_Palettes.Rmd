@@ -47,14 +47,14 @@ While the default Seurat and ggplot2 plots work well they can often be enhanced 
 library(tidyverse)
 library(patchwork)
 library(scCustomize)
-
-pbmc <- pbmc3k.SeuratData::pbmc3k.final
+load('/Users/osman/Desktop/LaSalle_lab/Scripts/All_female_samples/all_female_preLabel.RData')
+experiment.aggregate <- experiment.aggregate3k.SeuratData::experiment.aggregate3k.final
 
 ```
 
 
 ```{r include=FALSE}
-pbmc <- UpdateSeuratObject(pbmc)
+experiment.aggregate <- UpdateSeuratObject(experiment.aggregate)
 ```
 
 
@@ -72,10 +72,10 @@ scCustomize has a number of quick helpers for access to palettes from viridis pa
 
 
 ```{r include=FALSE}
-p1 <- FeaturePlot(object = pbmc, features = "CD3E", order = T)
-p2 <- FeaturePlot_scCustom(seurat_object = pbmc, features = "CD3E", order = T)
-p3 <- FeaturePlot_scCustom(seurat_object = pbmc, colors_use = viridis_magma_dark_high, features = "CD3E", order = T)
-p4 <- FeaturePlot_scCustom(seurat_object = pbmc, colors_use = viridis_light_high, features = "CD3E", order = T)
+p1 <- FeaturePlot(object = experiment.aggregate, features = "Mecp2", order = T)
+p2 <- FeaturePlot_scCustom(seurat_object = experiment.aggregate, features = "Mecp2", order = T)
+p3 <- FeaturePlot_scCustom(seurat_object = experiment.aggregate, colors_use = viridis_magma_dark_high, features = "Mecp2", order = T)
+p4 <- FeaturePlot_scCustom(seurat_object = experiment.aggregate, colors_use = viridis_light_high, features = "Mecp2", order = T)
 ```
 
 ```{r echo=FALSE, fig.align='center', fig.cap="*These palettes provided better contrast for continuous palettes.\n In scCustomize the default is `viridis_plasma_dark_high`*", fig.dim=c(10, 2.5)}
@@ -101,12 +101,12 @@ The function `DiscretePalette_scCustomize` is function inspired and modified fro
 polychrome_pal <- DiscretePalette_scCustomize(num_colors = 36, palette = "polychrome")
 
 # Call within another function
-DimPlot(object = obj_name, cols = DiscretePalette_scCustomize(num_colors = 26, palette = "polychrome"))
+DimPlot(object = experiment.aggregate, cols = DiscretePalette_scCustomize(num_colors = 26, palette = "polychrome"))
 ```
 
 ### The "polychrome" palette is the new default for plots with <36 levels and "varibow" when more than 36 levels
 ```{r fig.align='center'}
-DimPlot_scCustom(seurat_object = pbmc)
+DimPlot_scCustom(seurat_object = experiment.aggregate, group.by = "orig.ident")
 ```
 
 
