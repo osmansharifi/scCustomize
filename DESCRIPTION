@@ -25,6 +25,7 @@ Imports:
     ggprism,
     ggrepel,
     glue,
+    janitor,
     magrittr,
     Matrix,
     paletteer,
@@ -38,6 +39,7 @@ Imports:
     SeuratObject (>= 4.0.3),
     stringi,
     stringr,
+    tibble,
     tidyr,
     tidyselect,
     viridis
