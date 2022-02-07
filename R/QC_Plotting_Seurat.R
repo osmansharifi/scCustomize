@@ -29,13 +29,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' QC_Plots_Genes(seurat_object = object, plot_title = "Genes per Cell", low_cutoff = 600, high_cutoff = 4000)
+#' QC_Plots_Genes(seurat_object = object, plot_title = "Genes per Nucleus", low_cutoff = 600, high_cutoff = 4000)
 #' }
 #'
 
 QC_Plots_Genes <- function(
   seurat_object,
-  plot_title = "Genes Per Cell/Nucleus",
+  plot_title = "Genes Per Nucleus",
   x_axis_label = NULL,
   y_axis_label = NULL,
   low_cutoff = NULL,
@@ -106,7 +106,7 @@ QC_Plots_Genes <- function(
 
 QC_Plots_UMIs <- function(
   seurat_object,
-  plot_title = "UMIs per Cell/Nucleus",
+  plot_title = "UMIs per Nucleus",
   x_axis_label = NULL,
   y_axis_label = NULL,
   low_cutoff = NULL,
@@ -171,13 +171,13 @@ QC_Plots_UMIs <- function(
 #'
 #' @examples
 #' \dontrun{
-#' QC_Plots_Mito(seurat_object = object, plot_title = "Percent Mito per Cell", high_cutoff = 10)
+#' QC_Plots_Mito(seurat_object = object, plot_title = "Percent Mito per Nucleus", high_cutoff = 10)
 #' }
 #'
 
 QC_Plots_Mito <- function(
   seurat_object,
-  plot_title = "Mito Gene % per Cell/Nucleus",
+  plot_title = "Mito Gene % per Nucleus",
   x_axis_label = NULL,
   y_axis_label = NULL,
   low_cutoff = NULL,
@@ -269,7 +269,7 @@ QC_Plots_Feature <- function(
   pt.size <- pt.size %||% AutoPointSize_scCustom(data = seurat_object)
 
   if (is.null(x = plot_title)) {
-    plot_title <- paste0(feature, " per Cell/Nucleus")
+    plot_title <- paste0(feature, " per Nucleus")
   }
   plot <- VlnPlot(object = seurat_object, features = feature, pt.size = pt.size, cols = colors_use, ...) +
     geom_hline(yintercept = c(low_cutoff, high_cutoff), linetype = "dashed", color = "red") +
@@ -350,8 +350,8 @@ QC_Plots_Feature <- function(
 
 QC_Plot_UMIvsGene <- function(
   seurat_object,
-  x_axis_label = "UMIs per Cell/Nucleus",
-  y_axis_label = "Genes per Cell/Nucleus",
+  x_axis_label = "UMIs per Nucleus",
+  y_axis_label = "Genes per Nucleus",
   low_cutoff_gene = -Inf,
   high_cutoff_gene = Inf,
   low_cutoff_UMI = -Inf,
@@ -462,7 +462,7 @@ QC_Plot_UMIvsGene <- function(
         geom_vline(xintercept = c(if(is.finite(x = low_cutoff_UMI)) {low_cutoff_UMI}, if(is.finite(x = high_cutoff_UMI)) {high_cutoff_UMI}), linetype = "dashed", color = "blue") +
         xlab(x_axis_label) +
         ylab(y_axis_label) +
-        ggtitle("Genes vs. UMIs per Cell/Nucleus", subtitle = c(paste0("Correlation of full dataset is: ", plot_cor_full, ".", "\nCorrelation of filtered dataset would be: ", plot_cor_filtered, ".  ", "\nThe low cutoff for plotting ", meta_gradient_name, " is: ", meta_cutoff_reported)))
+        ggtitle("Genes vs. UMIs per Nucleus", subtitle = c(paste0("Correlation of full dataset is: ", plot_cor_full, ".", "\nCorrelation of filtered dataset would be: ", plot_cor_filtered, ".  ", "\nThe low cutoff for plotting ", meta_gradient_name, " is: ", meta_cutoff_reported)))
       return(p1)
     }
     p1 <- ggplot(data = featurescatter_data_sort, mapping = aes(x = nCount_RNA, y = nFeature_RNA)) +
@@ -474,7 +474,7 @@ QC_Plot_UMIvsGene <- function(
       geom_vline(xintercept = c(if(is.finite(x = low_cutoff_UMI)) {low_cutoff_UMI}, if(is.finite(x = high_cutoff_UMI)) {high_cutoff_UMI}), linetype = "dashed", color = "blue") +
       xlab(x_axis_label) +
       ylab(y_axis_label) +
-      ggtitle("Genes vs. UMIs per Cell/Nucleus", subtitle = c(paste0("Correlation of full dataset is: ", plot_cor_full, ".", "\nCorrelation of filtered dataset would be: ", plot_cor_filtered, ".  ", "\nThe low cutoff for plotting ", meta_gradient_name, " is: ", meta_cutoff_reported)))
+      ggtitle("Genes vs. UMIs per Nucleus", subtitle = c(paste0("Correlation of full dataset is: ", plot_cor_full, ".", "\nCorrelation of filtered dataset would be: ", plot_cor_filtered, ".  ", "\nThe low cutoff for plotting ", meta_gradient_name, " is: ", meta_cutoff_reported)))
     return(p1)
   }
   # Plot by identity
@@ -484,7 +484,7 @@ QC_Plot_UMIvsGene <- function(
       geom_vline(xintercept = c(if(is.finite(x = low_cutoff_UMI)) {low_cutoff_UMI}, if(is.finite(x = high_cutoff_UMI)) {high_cutoff_UMI}), linetype = "dashed", color = "blue") +
       xlab(x_axis_label) +
       ylab(y_axis_label) +
-      ggtitle("Genes vs. UMIs per Cell/Nucleus", subtitle = c(paste0("Correlation of full dataset is: ", plot_cor_full, ".", "\nCorrelation of filtered dataset would be: ", plot_cor_filtered, ".")))
+      ggtitle("Genes vs. UMIs per Nucleus", subtitle = c(paste0("Correlation of full dataset is: ", plot_cor_full, ".", "\nCorrelation of filtered dataset would be: ", plot_cor_filtered, ".")))
     return(p1)
   }
 
@@ -520,7 +520,7 @@ QC_Plot_UMIvsGene <- function(
     }
 
     # plot together in layout
-    plots <- wrap_plots(p1, p2) + plot_annotation(title = "Genes vs. UMIs per Cell/Nucleus", subtitle = c(paste0("Correlation of full dataset is: ", plot_cor_full, ".", "\nCorrelation of filtered dataset would be: ", plot_cor_filtered, ".  ", "\nThe low cutoff for plotting ", meta_gradient_name, " is: ", meta_cutoff_reported))) & theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 16))
+    plots <- wrap_plots(p1, p2) + plot_annotation(title = "Genes vs. UMIs per Nucleus", subtitle = c(paste0("Correlation of full dataset is: ", plot_cor_full, ".", "\nCorrelation of filtered dataset would be: ", plot_cor_filtered, ".  ", "\nThe low cutoff for plotting ", meta_gradient_name, " is: ", meta_cutoff_reported))) & theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 16))
     return(plots)
   }
 }
@@ -570,7 +570,7 @@ QC_Plot_GenevsFeature <- function(
   seurat_object,
   feature1,
   x_axis_label = NULL,
-  y_axis_label = "Genes per Cell/Nucleus",
+  y_axis_label = "Genes per Nucleus",
   low_cutoff_gene = NULL,
   high_cutoff_gene = NULL,
   low_cutoff_feature = NULL,
@@ -589,7 +589,7 @@ QC_Plot_GenevsFeature <- function(
 
   # Label x axis
   if (is.null(x = x_axis_label)) {
-    x_axis_label <- paste0(feature1, " per Cell/Nucleus")
+    x_axis_label <- paste0(feature1, " per Nucleus")
   }
 
   # select color palette if not specified
@@ -670,7 +670,7 @@ QC_Plot_UMIvsFeature <- function(
   seurat_object,
   feature1,
   x_axis_label = NULL,
-  y_axis_label = "UMIs per Cell/Nucleus",
+  y_axis_label = "UMIs per Nucleus",
   low_cutoff_UMI = NULL,
   high_cutoff_UMI = NULL,
   low_cutoff_feature = NULL,
@@ -689,7 +689,7 @@ QC_Plot_UMIvsFeature <- function(
 
   # Label x axis
   if (is.null(x = x_axis_label)) {
-    x_axis_label <- paste0(feature1, " per Cell/Nucleus")
+    x_axis_label <- paste0(feature1, " per Nucleus")
   }
 
   # select color palette if not specified
